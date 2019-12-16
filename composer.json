@@ -1,0 +1,29 @@
+{
+    "name": "wpl-agency/dark-mode-for-elementor",
+    "description": "Dark Mode For Elementor",
+    "homepage": "https://github.com/wpl-agency/dark-mode-for-elementor/",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Mikhail Kobzarev",
+            "email": "mikhail@kobzarev.com",
+            "homepage": "https://www.kobzarev.com/"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "platform": {
+            "php": "5.6"
+        }
+    },
+    "require": {
+        "composer/installers": "^1.7"
+    },
+    "autoload": {
+        "classmap": [
+            "classes"
+        ]
+    }
+}
