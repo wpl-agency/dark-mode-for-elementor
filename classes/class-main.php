@@ -41,6 +41,7 @@ class Main {
 		//add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		//add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'elementor/frontend/after_register_styles', [ $this, 'enqueue_styles' ] );
 	}
 
 	/**
@@ -92,6 +93,18 @@ class Main {
 			[],
 			'1.5.3',
 			true
+		);
+	}
+
+	/**
+	 * Add required styles.
+	 */
+	public function enqueue_styles() {
+		wp_enqueue_style(
+			WPL_DARK_MODE_FOR_ELEMENTOR_SLUG . '_app',
+			WPL_DARK_MODE_FOR_ELEMENTOR_URL . 'css/app.css',
+			[],
+			filemtime( WPL_DARK_MODE_FOR_ELEMENTOR_DIR . 'css/app.css' )
 		);
 	}
 }

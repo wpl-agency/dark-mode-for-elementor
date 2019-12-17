@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_VERSION', '1.0' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_SLUG', 'dark_mode_for_elementor' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_FILE', __FILE__ );
-define( 'WPL_DARK_MODE_FOR_ELEMENTOR_DIR', __DIR__ );
+define( 'WPL_DARK_MODE_FOR_ELEMENTOR_DIR', __DIR__ . '/' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_URL', plugin_dir_url( WPL_DARK_MODE_FOR_ELEMENTOR_FILE ) );
 
 /**
@@ -47,7 +47,7 @@ function dark_mode_for_elementor() {
 		return;
 	}
 
-	require_once WPL_DARK_MODE_FOR_ELEMENTOR_DIR . '/vendor/autoload.php';
+	require_once WPL_DARK_MODE_FOR_ELEMENTOR_DIR . 'vendor/autoload.php';
 
 	$main = new Main();
 }

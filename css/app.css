@@ -1,0 +1,9 @@
+.wpl_button {
+	display: inline-block;
+	z-index: 500;
+	user-select: none;
+	text-align: center;
+	cursor: pointer;
+	overflow: hidden;
+	white-space: nowrap;
+}
