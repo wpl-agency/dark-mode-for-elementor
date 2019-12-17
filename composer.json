@@ -19,7 +19,10 @@
         }
     },
     "require": {
-        "composer/installers": "^1.7"
+        "composer/installers": "^1.7",
+        "ext-json": "*"
+    },
+    "require-dev": {
     },
     "autoload": {
         "classmap": [

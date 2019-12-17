@@ -127,31 +127,93 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'time',
 			array(
-				'label'       => esc_html__( 'Time', 'dark-mode-for-elementor' ),
+				'label'       => esc_html__( 'Animation Duration', 'dark-mode-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 0.5,
 				'step'        => 0.1,
 				'min'         => 0.1,
-				'max'         => 0.9,
-				'show_label'  => true,
+				'max'         => 3,
 			)
 		);
 
 		$this->add_control(
 			'width',
 			array(
-				'label'       => esc_html__( 'Width', 'dark-mode-for-elementor' ),
-				'type'        => Controls_Manager::NUMBER,
-				'default'     => 42,
+				'label'      => esc_html__( 'Button Width', 'dark-mode-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range'      => [
+					'px' => [
+						'min'  => 20,
+						'max'  => 300,
+						'step' => 1,
+					],
+					'%'  => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default'    => [
+					'unit' => 'px',
+					'size' => 42,
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .wpl_button' => 'width: {{SIZE}}{{UNIT}};',
+				],
 			)
 		);
 
 		$this->add_control(
 			'height',
 			array(
-				'label'       => esc_html__( 'Height', 'dark-mode-for-elementor' ),
-				'type'        => Controls_Manager::NUMBER,
-				'default'     => 42,
+				'label'       => esc_html__( 'Button Height', 'dark-mode-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range'      => [
+					'px' => [
+						'min'  => 20,
+						'max'  => 300,
+						'step' => 1,
+					],
+					'%'  => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default'    => [
+					'unit' => 'px',
+					'size' => 42,
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .wpl_button' => 'height: {{SIZE}}{{UNIT}};',
+				],
+			)
+		);
+
+		$this->add_control(
+			'line_height',
+			array(
+				'label'       => esc_html__( 'Button Line Height', 'dark-mode-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em' ],
+				'range'      => [
+					'px' => [
+						'min'  => 20,
+						'max'  => 300,
+						'step' => 1,
+					],
+					'em'  => [
+						'min' => 1,
+						'max' => 10,
+					],
+				],
+				'default'    => [
+					'unit' => 'px',
+					'size' => 42,
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .wpl_button' => 'line-height: {{SIZE}}{{UNIT}};',
+				],
 			)
 		);
 
@@ -188,6 +250,9 @@ class Widget extends Widget_Base {
 				'condition'   => array(
 					'position_fixed' => 'yes',
 				),
+				'selectors' => [
+					'{{WRAPPER}} .wpl_button' => 'right: {{VALUE}}px;',
+				],
 			)
 		);
 
@@ -200,6 +265,9 @@ class Widget extends Widget_Base {
 				'condition'   => array(
 					'position_fixed' => 'yes',
 				),
+				'selectors' => [
+					'{{WRAPPER}} .wpl_button' => 'bottom: {{VALUE}}px;',
+				],
 			)
 		);
 
@@ -245,7 +313,7 @@ class Widget extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Background Color', 'dark-mode-for-elementor' ),
 				'type'    => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#333',
 				'selectors' => [
 					'{{WRAPPER}} .wpl_button' => 'background-color: {{VALUE}};',
 				],
@@ -257,7 +325,7 @@ class Widget extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Text Color', 'dark-mode-for-elementor' ),
 				'type'    => Controls_Manager::COLOR,
-				'default' => '#333',
+				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpl_button' => 'color: {{VALUE}};',
 				],
@@ -293,6 +361,39 @@ class Widget extends Widget_Base {
 				'default' => '#333',
 				'selectors' => [
 					'.darkmode--activated {{WRAPPER}} .wpl_button' => 'color: {{VALUE}};',
+				],
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_dark_mode_hover',
+			[
+				'label' => __( 'Hover', 'dark-mode-for-elementor' ),
+			]
+		);
+
+		$this->add_control(
+			'background_color_hover',
+			array(
+				'label'   => esc_html__( 'Background Color', 'dark-mode-for-elementor' ),
+				'type'    => Controls_Manager::COLOR,
+				'default' => '#ccc',
+				'selectors' => [
+					'{{WRAPPER}} .wpl_button:hover' => 'background-color: {{VALUE}};',
+				],
+			)
+		);
+
+		$this->add_control(
+			'text_color_hover',
+			array(
+				'label'   => esc_html__( 'Text Color', 'dark-mode-for-elementor' ),
+				'type'    => Controls_Manager::COLOR,
+				'default' => '#333',
+				'selectors' => [
+					'{{WRAPPER}} .wpl_button:hover' => 'color: {{VALUE}};',
 				],
 			)
 		);
@@ -347,17 +448,18 @@ class Widget extends Widget_Base {
 		>
 		</wpl-button>
 		<style>
+			.darkmode-layer {
+				z-index: 500;
+			}
 			.darkmode-layer + div {
 				display: none;
+			}
+			.darkmode-layer--button {
+				right: -100px;
 			}
 			#wpl_button_<?php echo esc_attr( $this->get_id() ); ?> {
 
 				position: <?php echo ( 'yes' === $settings['position_fixed'] ) ? 'fixed' : 'static'; ?>;
-				width: <?php echo absint( $settings['width'] ); ?>px;
-				height: <?php echo absint( $settings['width'] ); ?>px;
-				line-height: <?php echo absint( $settings['height'] ); ?>px;
-				right: <?php echo absint( $settings['right'] ); ?>px;
-				bottom: <?php echo absint( $settings['bottom'] ); ?>px;
 			}
 			#wpl_button_<?php echo esc_attr( $this->get_id() ); ?>::before {
 				content: '<?php echo esc_html( $settings['label'] ); ?>';
@@ -373,14 +475,18 @@ class Widget extends Widget_Base {
 						saveInCookies: <?php echo ( 'yes' === $settings['save_in_cookies'] ) ? 1 : 0; ?>,
 						autoMatchOsTheme: <?php echo ( 'yes' === $settings['auto_match_os_theme'] ) ? 1 : 0; ?>,
 						label: '',
-						mixColor: '<?php echo esc_js( $settings['mix_color'] ); ?>',
+						mixColor: '<?php echo esc_js( $settings['mix_color'] ); ?>'
 					},
 						wpl_button_<?php echo esc_attr( $this->get_id() ); ?> = new Darkmode( options );
+						wpl_button_<?php echo esc_attr( $this->get_id() ); ?>.showWidget();
+						//new Darkmode( options );
 
 					document.getElementById( 'wpl_button_<?php echo esc_attr( $this->get_id() ); ?>' ).addEventListener(
 						'click',
 						function () {
-							wpl_button_<?php echo esc_attr( $this->get_id() ); ?> . toggle();
+							console.log( 'click' );
+							//wpl_button_<?php echo esc_attr( $this->get_id() ); ?> . toggle();
+							document.getElementsByClassName( 'darkmode-toggle' )[0].click();
 						}
 					);
 				}

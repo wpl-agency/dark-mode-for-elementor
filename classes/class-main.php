@@ -6,28 +6,24 @@ namespace WPL\Dark_Mode_For_Elementor;
 
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
+use Elementor\Settings;
 use Elementor\Widget_Base;
 use Elementor\Elements_Manager;
 use Elementor\Plugin;
 
 class Main {
 	/**
-	 * @var Options $options
+	 * @var Updater $updater
 	 */
-	private $options;
+	private $updater;
 
 	/**
 	 * Main constructor.
 	 *
-	 * @param Options $options
+	 * @param Updater $updater
 	 */
-	public function __construct( $options = null ) {
-		$this->options = $options;
-
-		if ( ! $this->options ) {
-			//$this->options = new Options();
-		}
-
+	public function __construct( $updater = null ) {
+		$this->updater = $updater;
 		$this->hooks();
 	}
 
@@ -42,6 +38,58 @@ class Main {
 		//add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'elementor/frontend/after_register_styles', [ $this, 'enqueue_styles' ] );
+		add_action( 'elementor/admin/after_create_settings/elementor', [ $this, 'register_settings' ] );
+		add_action( 'admin_init', [ $this, 'register_plugin_updater' ] );
+	}
+
+	/**
+	 * Register plugin updater.
+	 */
+	public function register_plugin_updater() {
+		if ( ! $this->updater ) {
+			// retrieve our license key from the DB
+			$license_key = trim( get_option( 'edd_sample_license_key' ) );
+
+			// setup the updater
+			$this->updater = new Updater(
+				WPL_DARK_MODE_FOR_ELEMENTOR_API_URL,
+				WPL_DARK_MODE_FOR_ELEMENTOR_FILE,
+				array(
+					'version' => WPL_DARK_MODE_FOR_ELEMENTOR_VERSION,                    // current version number
+					'license' => $license_key,             // license key (used get_option above to retrieve from DB)
+					'item_id' => WPL_DARK_MODE_FOR_ELEMENTOR_EDD_ID,       // ID of the product
+					'author'  => 'Easy Digital Downloads', // author of this plugin
+					'beta'    => false,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Create Setting Tab
+	 *
+	 * @param Settings $settings Elementor "Settings" page in WordPress Dashboard.
+	 *
+	 * @since 1.3
+	 *
+	 * @access public
+	 */
+	public function register_settings( Settings $settings ) {
+		$settings->add_section(
+			Settings::TAB_INTEGRATIONS,
+			WPL_DARK_MODE_FOR_ELEMENTOR_SLUG,
+			[
+				'label'    => __( 'Dark Mode', 'dark-mode-for-elementor' ),
+				'fields'   => [
+					WPL_DARK_MODE_FOR_ELEMENTOR_SLUG . '_license_key' => [
+						'label'      => __( 'License Key', 'dark-mode-for-elementor' ),
+						'field_args' => [
+							'type' => 'text',
+						],
+					],
+				],
+			]
+		);
 	}
 
 	/**

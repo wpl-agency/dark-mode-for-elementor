@@ -7,7 +7,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Dark Mode For Elementor
- * Plugin URI:        https://wordpress.org/plugins/dark-mode-for-elementor/
+ * Plugin URI:        https://wpl.agency/dark-mode-for-elementor/
  * Description:       Dark Mode For Elementor
  * Version:           1.0
  * Author:            wpl.agency
@@ -29,6 +29,8 @@ define( 'WPL_DARK_MODE_FOR_ELEMENTOR_SLUG', 'dark_mode_for_elementor' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_FILE', __FILE__ );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_DIR', __DIR__ . '/' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_URL', plugin_dir_url( WPL_DARK_MODE_FOR_ELEMENTOR_FILE ) );
+define( 'WPL_DARK_MODE_FOR_ELEMENTOR_API_URL', 'https://api.wpl.agency' );
+define( 'WPL_DARK_MODE_FOR_ELEMENTOR_EDD_ID', 10 );
 
 /**
  * Load gettext translate for our text domain.
