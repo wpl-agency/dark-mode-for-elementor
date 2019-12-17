@@ -234,10 +234,20 @@ class Widget extends Widget_Base {
 		);
 
 		$this->add_control(
-			'position_fixed',
+			'position',
 			array(
-				'label'        => esc_html__( 'Position Fixed', 'dark-mode-for-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
+				'label'        => esc_html__( 'Position', 'dark-mode-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'options'      => [
+					'static'   => esc_html__( 'Static', 'dark-mode-for-elementor' ),
+					'relative' => esc_html__( 'Relative', 'dark-mode-for-elementor' ),
+					'absolute' => esc_html__( 'Absolute', 'dark-mode-for-elementor' ),
+					'fixed'    => esc_html__( 'Fixed', 'dark-mode-for-elementor' ),
+				],
+				'default'      => 'fixed',
+				'selectors'    => [
+					'{{WRAPPER}} .wpl_button' => 'position: {{VALUE}}',
+				],
 			)
 		);
 
@@ -248,7 +258,7 @@ class Widget extends Widget_Base {
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 20,
 				'condition'   => array(
-					'position_fixed' => 'yes',
+					'position' => [ 'fixed', 'relative', 'absolute' ],
 				),
 				'selectors' => [
 					'{{WRAPPER}} .wpl_button' => 'right: {{VALUE}}px;',
@@ -263,7 +273,7 @@ class Widget extends Widget_Base {
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 20,
 				'condition'   => array(
-					'position_fixed' => 'yes',
+					'position' => [ 'fixed', 'relative', 'absolute' ],
 				),
 				'selectors' => [
 					'{{WRAPPER}} .wpl_button' => 'bottom: {{VALUE}}px;',
@@ -457,10 +467,6 @@ class Widget extends Widget_Base {
 			.darkmode-layer--button {
 				right: -100px;
 			}
-			#wpl_button_<?php echo esc_attr( $this->get_id() ); ?> {
-
-				position: <?php echo ( 'yes' === $settings['position_fixed'] ) ? 'fixed' : 'static'; ?>;
-			}
 			#wpl_button_<?php echo esc_attr( $this->get_id() ); ?>::before {
 				content: '<?php echo esc_html( $settings['label'] ); ?>';
 			}
@@ -479,13 +485,10 @@ class Widget extends Widget_Base {
 					},
 						wpl_button_<?php echo esc_attr( $this->get_id() ); ?> = new Darkmode( options );
 						wpl_button_<?php echo esc_attr( $this->get_id() ); ?>.showWidget();
-						//new Darkmode( options );
 
 					document.getElementById( 'wpl_button_<?php echo esc_attr( $this->get_id() ); ?>' ).addEventListener(
 						'click',
 						function () {
-							console.log( 'click' );
-							//wpl_button_<?php echo esc_attr( $this->get_id() ); ?> . toggle();
 							document.getElementsByClassName( 'darkmode-toggle' )[0].click();
 						}
 					);

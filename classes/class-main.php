@@ -48,7 +48,7 @@ class Main {
 	public function register_plugin_updater() {
 		if ( ! $this->updater ) {
 			// retrieve our license key from the DB
-			$license_key = trim( get_option( 'edd_sample_license_key' ) );
+			$license_key = trim( $this->get_option( 'license_key' ) );
 
 			// setup the updater
 			$this->updater = new Updater(
