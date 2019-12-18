@@ -7,3 +7,15 @@
 	overflow: hidden;
 	white-space: nowrap;
 }
+.wpl_button::before {
+	content: attr(data-label);
+}
+.darkmode-layer {
+	z-index: 500;
+}
+.darkmode-layer + div {
+	display: none;
+}
+.darkmode-layer--button {
+	right: -100px;
+}

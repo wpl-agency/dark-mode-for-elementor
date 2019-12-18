@@ -433,7 +433,6 @@ class Widget extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpl_button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				//'separator' => 'before',
 			]
 		);
 
@@ -452,26 +451,11 @@ class Widget extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		?>
 		<wpl-button
-			class="wpl_button"
+			class="wp-exclude-emoji wpl_button"
 			id="wpl_button_<?php echo esc_attr( $this->get_id() ); ?>"
 			title="<?php echo esc_html__( 'Enable/Disable Dark Mode', 'dark-mode-for-elementor' ); ?>"
-		>
+			data-label="<?php echo esc_attr( $settings['label'] ); ?>">
 		</wpl-button>
-		<style>
-			.darkmode-layer {
-				z-index: 500;
-			}
-			.darkmode-layer + div {
-				display: none;
-			}
-			.darkmode-layer--button {
-				right: -100px;
-			}
-			#wpl_button_<?php echo esc_attr( $this->get_id() ); ?>::before {
-				content: '<?php echo esc_html( $settings['label'] ); ?>';
-			}
-
-		</style>
 		<script>
 			document.addEventListener(
 				'DOMContentLoaded',
