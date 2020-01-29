@@ -141,6 +141,35 @@ class Main {
 		wp_send_json_success( $response);
 	}
 
+	function check_license_key() {
+		$license_key = $this->get_option( 'license_key' );
+
+		$api_params = array(
+			'edd_action' => 'check_license',
+			'license' => $license_key,
+			'item_id' => WPL_DARK_MODE_FOR_ELEMENTOR_EDD_ID,
+			//'item_name' => urlencode( $item_name ),
+			'url' => home_url()
+		);
+
+		$response = wp_remote_post(
+			WPL_DARK_MODE_FOR_ELEMENTOR_API_URL,
+			array( 'body' => $api_params, 'timeout' => 15, 'sslverify' => false )
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if( $license_data->license == 'valid' ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * Register plugin updater.
 	 */
@@ -174,6 +203,13 @@ class Main {
 	 * @access public
 	 */
 	public function register_settings( Settings $settings ) {
+
+		$classes = [];
+
+		if ( $this->check_license_key() ) {
+			$classes[] = 'success';
+		}
+
 		$settings->add_section(
 			Settings::TAB_INTEGRATIONS,
 			WPL_DARK_MODE_FOR_ELEMENTOR_SLUG,
@@ -191,10 +227,11 @@ class Main {
 						'field_args' => [
 							'type' => 'raw_html',
 							'html' => sprintf(
-								'<button type="button" data-action="%s" data-nonce="%s" data-id="%s" class="button elementor-button-spinner js-wpl-ajax">%s</button>',
+								'<button type="button" data-action="%s" data-nonce="%s" data-id="%s" class="button elementor-button-spinner js-wpl-ajax %s">%s</button>',
 								self::OPTION_NAME_LICENSE_KEY . '_validate',
 								wp_create_nonce( self::OPTION_NAME_LICENSE_KEY ),
 								'elementor_' . WPL_DARK_MODE_FOR_ELEMENTOR_SLUG . '_license_key',
+								implode( ' ', $classes ),
 								__( 'Validate License Key', 'dark-mode-for-elementor' )
 							),
 						],
@@ -267,9 +304,9 @@ class Main {
 	public function enqueue_scripts() {
 		wp_register_script(
 			WPL_DARK_MODE_FOR_ELEMENTOR_SLUG . '_app',
-			'https://cdn.jsdelivr.net/npm/darkmode-js@1.5.3/lib/darkmode-js.min.js',
+			'https://cdn.jsdelivr.net/npm/darkmode-js@1.5.4/lib/darkmode-js.min.js',
 			[],
-			'1.5.3',
+			'1.5.4',
 			true
 		);
 	}

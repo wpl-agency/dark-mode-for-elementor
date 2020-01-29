@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Dark Mode For Elementor
  *
@@ -29,8 +28,8 @@ define( 'WPL_DARK_MODE_FOR_ELEMENTOR_SLUG', 'dark_mode_for_elementor' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_FILE', __FILE__ );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_DIR', __DIR__ . '/' );
 define( 'WPL_DARK_MODE_FOR_ELEMENTOR_URL', plugin_dir_url( WPL_DARK_MODE_FOR_ELEMENTOR_FILE ) );
-define( 'WPL_DARK_MODE_FOR_ELEMENTOR_API_URL', 'https://api.wpl.agency' );
-define( 'WPL_DARK_MODE_FOR_ELEMENTOR_EDD_ID', 10 );
+define( 'WPL_DARK_MODE_FOR_ELEMENTOR_API_URL', 'https://wpl.agency' );
+define( 'WPL_DARK_MODE_FOR_ELEMENTOR_EDD_ID', 563 );
 
 /**
  * Load gettext translate for our text domain.

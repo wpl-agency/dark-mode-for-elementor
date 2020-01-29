@@ -91,14 +91,45 @@ class Widget extends Widget_Base {
 			)
 		);
 
+		$this->start_controls_tabs( 'tabs_dark_mode_content' );
+
+		$this->start_controls_tab(
+			'tab_dark_mode_content_light',
+			[
+				'label' => __( 'Light', 'dark-mode-for-elementor' ),
+			]
+		);
+
 		$this->add_control(
-			'label',
+			'label_light',
 			array(
 				'label'       => esc_html__( 'Label', 'dark-mode-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '🌓',
 			)
 		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_dark_mode_content_dark',
+			[
+				'label' => __( 'Dark', 'dark-mode-for-elementor' ),
+			]
+		);
+
+		$this->add_control(
+			'label_dark',
+			array(
+				'label'       => esc_html__( 'Label', 'dark-mode-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => '🌓',
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
 			'align',
@@ -228,7 +259,15 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'auto_match_os_theme',
 			array(
-				'label'        => esc_html__( 'Auto Match Os Theme', 'dark-mode-for-elementor' ),
+				'label'        => esc_html__( 'According to OS theme', 'dark-mode-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+			)
+		);
+
+		$this->add_control(
+			'exclude_images',
+			array(
+				'label'        => esc_html__( 'Exclude Images', 'dark-mode-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 			)
 		);
@@ -454,7 +493,8 @@ class Widget extends Widget_Base {
 			class="wp-exclude-emoji wpl_button"
 			id="wpl_button_<?php echo esc_attr( $this->get_id() ); ?>"
 			title="<?php echo esc_html__( 'Enable/Disable Dark Mode', 'dark-mode-for-elementor' ); ?>"
-			data-label="<?php echo esc_attr( $settings['label'] ); ?>">
+			data-label_light="<?php echo esc_attr( $settings['label_light'] ); ?>"
+			data-label_dark="<?php echo esc_attr( $settings['label_dark'] ); ?>">
 		</wpl-button>
 		<script>
 			document.addEventListener(

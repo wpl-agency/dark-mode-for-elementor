@@ -8,14 +8,31 @@
 	white-space: nowrap;
 }
 .wpl_button::before {
-	content: attr(data-label);
+	content: attr(data-label_light);
 }
-.darkmode-layer {
-	z-index: 500;
+.darkmode--activated .wpl_button::before {
+	content: attr(data-label_dark);
+}
+.darkmode-layer, .darkmode-toggle {
+	/*z-index: 500; !* uncomment for debug *!*/
 }
 .darkmode-layer + div {
 	display: none;
 }
 .darkmode-layer--button {
-	right: -100px;
+	right: -100px !important;
+}
+.darkmode-toggle {
+	display: none !important;
+}
+.darkmode--activated .elementor-image img {
+	/*mix-blend-mode: difference;*/
+	/*isolation: isolate;*/
+}
+
+#site-header {
+	position: static !important;
+}
+.header-inner {
+	z-index: inherit !important;
 }
